@@ -1,0 +1,5 @@
+p=public_html/css
+yuicompressor $p/common.css > $p/common.min.css
+yuicompressor $p/reset.css > $p/reset.min.css
+yuicompressor $p/site_header.css > $p/site_header.min.css
+yuicompressor $p/special_pickup.css > $p/special_pickup.min.css
