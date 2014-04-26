@@ -1,4 +1,4 @@
 #!/bin/sh
 alias closure=/usr/local/closure/bin/closure
 p=public_html
-closure --js $p/js/jquery-1.9.1.min.js --js $p/js/adsSimple-1.0.0.min.js --js $p/js/bookmarkbubble.js --js $p/js/bookmarkbubble_move.js --js $p/js/categoryalliance.js --js $p/js/common.js $p/js/jquery.showMenu.js --js $p/js/middle_banner.js $p/js/nicoapi.js --js $p/js/urchin.js --js_output_file $p/js/application.js
+closure --compilation_level WHITESPACE_ONLY --js $p/js/jquery-1.9.1.min.js --js $p/js/adsSimple-1.0.0.min.js --js $p/js/bookmarkbubble.js --js $p/js/bookmarkbubble_move.js --js $p/js/categoryalliance.js --js $p/js/common.js $p/js/jquery.showMenu.js --js $p/js/middle_banner.js $p/js/nicoapi.js --js $p/js/urchin.js --js_output_file $p/js/application.js
