@@ -62,21 +62,21 @@ google.bookmarkbubble.Bubble = function() {
    * @type {function()}
    * @private
    */
-  this.boundScrollHandler_ = google.bind(this.setPosition, this);
+  this.boundScrollHandler = google.bind(this.setPosition, this);
 
   /**
    * The bubble element.
    * @type {Element}
    * @private
    */
-  this.element_ = null;
+  this.element = null;
 
   /**
    * Whether the bubble has been destroyed.
    * @type {boolean}
    * @private
    */
-  this.hasBeenDestroyed_ = false;
+  this.hasBeenDestroyed = false;
 };
 
 
@@ -91,11 +91,11 @@ google.bookmarkbubble.Bubble = function() {
  *     allowed to show for one of the aforementioned reasons.
  */
 google.bookmarkbubble.Bubble.prototype.showIfAllowed = function() {
-  if (!this.isAllowedToShow_()) {
+  if (!this.isAllowedToShow()) {
     return false;
   }
 
-  this.show_();
+  this.show();
   return true;
 };
 
@@ -111,22 +111,21 @@ google.bookmarkbubble.Bubble.prototype.showIfAllowed = function() {
  *        actually shows.
  * @return {boolean} True if the bubble is allowed to show.
  */
-google.bookmarkbubble.Bubble.prototype.showIfAllowedWhenLoaded =
-    function(opt_callback) {
-  if (!this.isAllowedToShow_()) {
+google.bookmarkbubble.Bubble.prototype.showIfAllowedWhenLoaded = function(opt_callback) {
+  if (!this.isAllowedToShow()) {
     return false;
   }
 
   var self = this;
   // Attach to self to avoid garbage collection.
   var img = self.loadImg_ = document.createElement('img');
-  img.src = self.getIconUrl_();
+  img.src = self.getIconUrl();
   img.onload = function() {
     if (img.complete) {
       delete self.loadImg_;
       img.onload = null;  // Break the circular reference.
 
-      self.show_();
+      self.show();
       opt_callback && opt_callback();
     }
   };
@@ -198,7 +197,7 @@ google.bookmarkbubble.Bubble.prototype.LOCAL_STORAGE_PREFIX = 'BOOKMARK_';
  * @type {string}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.DISMISSED_ = 'DISMISSED_COUNT';
+google.bookmarkbubble.Bubble.prototype.DISMISSED = 'DISMISSED_COUNT';
 
 
 /**
@@ -206,7 +205,7 @@ google.bookmarkbubble.Bubble.prototype.DISMISSED_ = 'DISMISSED_COUNT';
  * @type {string}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.IMAGE_ARROW_DATA_URL_ = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAATCAMAAABSrFY3AAABKVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAADf398AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD09PQAAAAAAAAAAAC9vb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD19fUAAAAAAAAAAAAAAADq6uoAAAAAAAAAAAC8vLzU1NTT09MAAADg4OAAAADs7OwAAAAAAAAAAAD///+cueenwerA0vC1y+3a5fb5+/3t8vr4+v3w9PuwyOy3zO3h6vfh6vjq8Pqkv+mat+fE1fHB0/Cduuifu+iuxuuivemrxOvC1PDz9vzJ2fKpwuqmwOrb5vapw+q/0vDf6ffK2vLN3PPprJISAAAAQHRSTlMAAAEGExES7FM+JhUoQSxIRwMbNfkJUgXXBE4kDQIMHSA0Tw4xIToeTSc4Chz4OyIjPfI3QD/X5OZR6zzwLSUPrm1y3gAAAQZJREFUeF5lzsVyw0AURNE3IMsgmZmZgszQZoeZOf//EYlG5Yrhbs+im4Dj7slM5wBJ4OJ+undAUr68gK/Hyb6Bcp5yBR/w8jreNeAr5Eg2XE7g6e2/0z6cGw1JQhpmHP3u5aiPPnTTkIK48Hj9Op7bD3btAXTfgUdwYjwSDCVXMbizO0O4uDY/x4kYC5SWFnfC6N1a9RCO7i2XEmQJj2mHK1Hgp9Vq3QBRl9shuBLGhcNtHexcdQCnDUoUGetxDD+H2DQNG2xh6uAWgG2/17o1EmLqYH0Xej0UjHAaFxZIV6rJ/WK1kg7QZH8HU02zmdJinKZJaDV3TVMjM5Q9yiqYpUwiMwa/1apDXTNESjsAAAAASUVORK5CYII=';
+google.bookmarkbubble.Bubble.prototype.IMAGE_ARROW_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAATCAMAAABSrFY3AAABKVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAADf398AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD09PQAAAAAAAAAAAC9vb0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD19fUAAAAAAAAAAAAAAADq6uoAAAAAAAAAAAC8vLzU1NTT09MAAADg4OAAAADs7OwAAAAAAAAAAAD///+cueenwerA0vC1y+3a5fb5+/3t8vr4+v3w9PuwyOy3zO3h6vfh6vjq8Pqkv+mat+fE1fHB0/Cduuifu+iuxuuivemrxOvC1PDz9vzJ2fKpwuqmwOrb5vapw+q/0vDf6ffK2vLN3PPprJISAAAAQHRSTlMAAAEGExES7FM+JhUoQSxIRwMbNfkJUgXXBE4kDQIMHSA0Tw4xIToeTSc4Chz4OyIjPfI3QD/X5OZR6zzwLSUPrm1y3gAAAQZJREFUeF5lzsVyw0AURNE3IMsgmZmZgszQZoeZOf//EYlG5Yrhbs+im4Dj7slM5wBJ4OJ+undAUr68gK/Hyb6Bcp5yBR/w8jreNeAr5Eg2XE7g6e2/0z6cGw1JQhpmHP3u5aiPPnTTkIK48Hj9Op7bD3btAXTfgUdwYjwSDCVXMbizO0O4uDY/x4kYC5SWFnfC6N1a9RCO7i2XEmQJj2mHK1Hgp9Vq3QBRl9shuBLGhcNtHexcdQCnDUoUGetxDD+H2DQNG2xh6uAWgG2/17o1EmLqYH0Xej0UjHAaFxZIV6rJ/WK1kg7QZH8HU02zmdJinKZJaDV3TVMjM5Q9yiqYpUwiMwa/1apDXTNESjsAAAAASUVORK5CYII=';
 
 
 /**
@@ -214,7 +213,7 @@ google.bookmarkbubble.Bubble.prototype.IMAGE_ARROW_DATA_URL_ = 'data:image/png;b
  * @type {string}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.IMAGE_CLOSE_DATA_URL_ = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAALVBMVEXM3fm+1Pfb5/rF2fjw9f23z/aavPOhwfTp8PyTt/L3+v7T4vqMs/K7zP////+qRWzhAAAAXElEQVQIW2O4CwUM996BwVskxtOqd++2rwMyPI+ve31GD8h4Madqz2mwms5jZ/aBGS/mHIDoen3m+DowY8/hOVUgxusz+zqPg7SvPA1UxQfSvu/du0YUK2AMmDMA5H1qhVX33T8AAAAASUVORK5CYII=';
+google.bookmarkbubble.Bubble.prototype.IMAGE_CLOSE_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAALVBMVEXM3fm+1Pfb5/rF2fjw9f23z/aavPOhwfTp8PyTt/L3+v7T4vqMs/K7zP////+qRWzhAAAAXElEQVQIW2O4CwUM996BwVskxtOqd++2rwMyPI+ve31GD8h4Madqz2mwms5jZ/aBGS/mHIDoen3m+DowY8/hOVUgxusz+zqPg7SvPA1UxQfSvu/du0YUK2AMmDMA5H1qhVX33T8AAAAASUVORK5CYII=';
 
 
 /**
@@ -225,7 +224,7 @@ google.bookmarkbubble.Bubble.prototype.IMAGE_CLOSE_DATA_URL_ = 'data:image/png;b
  * @type {string}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.REL_ICON_ =
+google.bookmarkbubble.Bubble.prototype.REL_ICON =
     'apple-touch-icon-precomposed';
 
 
@@ -234,7 +233,7 @@ google.bookmarkbubble.Bubble.prototype.REL_ICON_ =
  * @type {!RegExp}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.MOBILE_SAFARI_USERAGENT_REGEX_ =
+google.bookmarkbubble.Bubble.prototype.MOBILE_SAFARI_USERAGENT_REGEX =
     /iPhone|iPod|iPad/;
 
 
@@ -243,7 +242,7 @@ google.bookmarkbubble.Bubble.prototype.MOBILE_SAFARI_USERAGENT_REGEX_ =
  * @type {!RegExp}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.IPAD_USERAGENT_REGEX_ = /iPad/;
+google.bookmarkbubble.Bubble.prototype.IPAD_USERAGENT_REGEX = /iPad/;
 
 
 /**
@@ -251,7 +250,7 @@ google.bookmarkbubble.Bubble.prototype.IPAD_USERAGENT_REGEX_ = /iPad/;
  * @type {!RegExp}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.IOS_VERSION_USERAGENT_REGEX_ =
+google.bookmarkbubble.Bubble.prototype.IOS_VERSION_USERAGENT_REGEX =
     /OS (\d)_(\d)(?:_(\d))?/;
 
 
@@ -260,10 +259,10 @@ google.bookmarkbubble.Bubble.prototype.IOS_VERSION_USERAGENT_REGEX_ =
  * @return {boolean} Whether the bubble should be shown or not.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.isAllowedToShow_ = function() {
-  return this.isMobileSafari_() &&
-      !this.hasBeenDismissedTooManyTimes_() &&
-      !this.isFullscreen_() &&
+google.bookmarkbubble.Bubble.prototype.isAllowedToShow = function() {
+  return this.isMobileSafari() &&
+      !this.hasBeenDismissedTooManyTimes() &&
+      !this.isFullscreen() &&
       !this.hasHashParameter();
 };
 
@@ -272,21 +271,21 @@ google.bookmarkbubble.Bubble.prototype.isAllowedToShow_ = function() {
  * Builds and shows the bubble.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.show_ = function() {
-  this.element_ = this.build_();
+google.bookmarkbubble.Bubble.prototype.show = function() {
+  this.element = this.build();
 
-  document.body.appendChild(this.element_);
-  this.element_.style.WebkitTransform =
-      'translate3d(0,' + this.getHiddenYPosition_() + 'px,0)';
+  document.body.appendChild(this.element);
+  this.element.style.WebkitTransform =
+      'translate3d(0,' + this.getHiddenYPosition() + 'px,0)';
 
   this.setHashParameter();
 
-  window.setTimeout(this.boundScrollHandler_, 1);
-  window.addEventListener('scroll', this.boundScrollHandler_, false);
+  window.setTimeout(this.boundScrollHandler, 1);
+  window.addEventListener('scroll', this.boundScrollHandler, false);
 
   // If the user does not dismiss the bubble, slide out and destroy it after
   // some time.
-  window.setTimeout(google.bind(this.autoDestruct_, this),
+  window.setTimeout(google.bind(this.autoDestruct, this),
       this.TIME_UNTIL_AUTO_DESTRUCT);
 };
 
@@ -295,15 +294,15 @@ google.bookmarkbubble.Bubble.prototype.show_ = function() {
  * Destroys the bubble by removing its DOM nodes from the document.
  */
 google.bookmarkbubble.Bubble.prototype.destroy = function() {
-  if (this.hasBeenDestroyed_) {
+  if (this.hasBeenDestroyed) {
     return;
   }
-  window.removeEventListener('scroll', this.boundScrollHandler_, false);
-  if (this.element_ && this.element_.parentNode == document.body) {
-    document.body.removeChild(this.element_);
-    this.element_ = null;
+  window.removeEventListener('scroll', this.boundScrollHandler, false);
+  if (this.element && this.element.parentNode == document.body) {
+    document.body.removeChild(this.element);
+    this.element = null;
   }
-  this.hasBeenDestroyed_ = true;
+  this.hasBeenDestroyed = true;
 };
 
 
@@ -311,10 +310,10 @@ google.bookmarkbubble.Bubble.prototype.destroy = function() {
  * Remember that the user has dismissed the bubble once more.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.rememberDismissal_ = function() {
+google.bookmarkbubble.Bubble.prototype.rememberDismissal = function() {
   if (window.localStorage) {
     try {
-      var key = this.LOCAL_STORAGE_PREFIX + this.DISMISSED_;
+      var key = this.LOCAL_STORAGE_PREFIX + this.DISMISSED;
       var value = Number(window.localStorage[key]) || 0;
       window.localStorage[key] = String(value + 1);
     } catch (ex) {
@@ -333,7 +332,7 @@ google.bookmarkbubble.Bubble.prototype.rememberDismissal_ = function() {
  *     that we will not show it again.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.hasBeenDismissedTooManyTimes_ =
+google.bookmarkbubble.Bubble.prototype.hasBeenDismissedTooManyTimes =
     function() {
   if (!window.localStorage) {
     // If we can not use localStorage to remember how many times the user has
@@ -342,7 +341,7 @@ google.bookmarkbubble.Bubble.prototype.hasBeenDismissedTooManyTimes_ =
     return true;
   }
   try {
-    var key = this.LOCAL_STORAGE_PREFIX + this.DISMISSED_;
+    var key = this.LOCAL_STORAGE_PREFIX + this.DISMISSED;
 
     // If the key has never been set, localStorage yields undefined, which
     // Number() turns into NaN. In that case we'll fall back to zero for
@@ -365,7 +364,7 @@ google.bookmarkbubble.Bubble.prototype.hasBeenDismissedTooManyTimes_ =
  * @return {boolean} Whether the application is running in fullscreen mode.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.isFullscreen_ = function() {
+google.bookmarkbubble.Bubble.prototype.isFullscreen = function() {
   return !!window.navigator.standalone;
 };
 
@@ -375,8 +374,8 @@ google.bookmarkbubble.Bubble.prototype.isFullscreen_ = function() {
  * @return {boolean} True if the current user agent looks like Mobile Safari.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.isMobileSafari_ = function() {
-  return this.MOBILE_SAFARI_USERAGENT_REGEX_.test(window.navigator.userAgent);
+google.bookmarkbubble.Bubble.prototype.isMobileSafari = function() {
+  return this.MOBILE_SAFARI_USERAGENT_REGEX.test(window.navigator.userAgent);
 };
 
 
@@ -385,8 +384,8 @@ google.bookmarkbubble.Bubble.prototype.isMobileSafari_ = function() {
  * @return {boolean} True if the current user agent looks like an iPad.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.isIpad_ = function() {
-  return this.IPAD_USERAGENT_REGEX_.test(window.navigator.userAgent);
+google.bookmarkbubble.Bubble.prototype.isIpad = function() {
+  return this.IPAD_USERAGENT_REGEX.test(window.navigator.userAgent);
 };
 
 
@@ -399,7 +398,7 @@ google.bookmarkbubble.Bubble.prototype.isIpad_ = function() {
  * @return {number} A representation of the version.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.getVersion_ = function(opt_a, opt_b,
+google.bookmarkbubble.Bubble.prototype.getVersion = function(opt_a, opt_b,
     opt_c, opt_d) {
   // We want to allow implicit conversion of any type to number while avoiding
   // compiler warnings about the type.
@@ -415,11 +414,11 @@ google.bookmarkbubble.Bubble.prototype.getVersion_ = function(opt_a, opt_b,
  * @return {number} The iOS version.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.getIosVersion_ = function() {
-  var groups = this.IOS_VERSION_USERAGENT_REGEX_.exec(
+google.bookmarkbubble.Bubble.prototype.getIosVersion = function() {
+  var groups = this.IOS_VERSION_USERAGENT_REGEX.exec(
       window.navigator.userAgent) || [];
   groups.shift();
-  return this.getVersion_.apply(this, groups);
+  return this.getVersion.apply(this, groups);
 };
 
 
@@ -428,9 +427,9 @@ google.bookmarkbubble.Bubble.prototype.getIosVersion_ = function() {
  * transition.
  */
 google.bookmarkbubble.Bubble.prototype.setPosition = function() {
-  this.element_.style.WebkitTransition = '-webkit-transform 0.7s ease-out';
-  this.element_.style.WebkitTransform =
-      'translate3d(0,' + this.getVisibleYPosition_() + 'px,0)';
+  this.element.style.WebkitTransition = '-webkit-transform 0.7s ease-out';
+  this.element.style.WebkitTransform =
+      'translate3d(0,' + this.getVisibleYPosition() + 'px,0)';
 };
 
 
@@ -439,9 +438,9 @@ google.bookmarkbubble.Bubble.prototype.setPosition = function() {
  * remembers that it was dismissed.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.closeClickHandler_ = function() {
+google.bookmarkbubble.Bubble.prototype.closeClickHandler = function() {
   this.destroy();
-  this.rememberDismissal_();
+  this.rememberDismissal();
 };
 
 
@@ -449,13 +448,13 @@ google.bookmarkbubble.Bubble.prototype.closeClickHandler_ = function() {
  * Gets called after a while if the user ignores the bubble.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.autoDestruct_ = function() {
-  if (this.hasBeenDestroyed_) {
+google.bookmarkbubble.Bubble.prototype.autoDestruct = function() {
+  if (this.hasBeenDestroyed) {
     return;
   }
-  this.element_.style.WebkitTransition = '-webkit-transform 0.7s ease-in';
-  this.element_.style.WebkitTransform =
-      'translate3d(0,' + this.getHiddenYPosition_() + 'px,0)';
+  this.element.style.WebkitTransition = '-webkit-transform 0.7s ease-in';
+  this.element.style.WebkitTransform =
+      'translate3d(0,' + this.getHiddenYPosition() + 'px,0)';
   window.setTimeout(google.bind(this.destroy, this), 700);
 };
 
@@ -465,9 +464,9 @@ google.bookmarkbubble.Bubble.prototype.autoDestruct_ = function() {
  * @return {number} The y offset.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.getVisibleYPosition_ = function() {
-  return this.isIpad_() ? window.pageYOffset + 17 :
-      window.pageYOffset - this.element_.offsetHeight + window.innerHeight - 17;
+google.bookmarkbubble.Bubble.prototype.getVisibleYPosition = function() {
+  return this.isIpad() ? window.pageYOffset + 17 :
+      window.pageYOffset - this.element.offsetHeight + window.innerHeight - 17;
 };
 
 
@@ -476,8 +475,8 @@ google.bookmarkbubble.Bubble.prototype.getVisibleYPosition_ = function() {
  * @return {number} The y offset.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.getHiddenYPosition_ = function() {
-  return this.isIpad_() ? window.pageYOffset - this.element_.offsetHeight :
+google.bookmarkbubble.Bubble.prototype.getHiddenYPosition = function() {
+  return this.isIpad() ? window.pageYOffset - this.element.offsetHeight :
       window.pageYOffset + window.innerHeight;
 };
 
@@ -496,9 +495,9 @@ google.bookmarkbubble.Bubble.prototype.iconUrl_;
  * @return {string} A url string.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.getIconUrl_ = function() {
+google.bookmarkbubble.Bubble.prototype.getIconUrl = function() {
   if (!this.iconUrl_) {
-    var link = this.getLink(this.REL_ICON_);
+    var link = this.getLink(this.REL_ICON);
     if (!link || !(this.iconUrl_ = link.href)) {
       this.iconUrl_ = 'data:image/png;base64,';
     }
@@ -530,95 +529,14 @@ google.bookmarkbubble.Bubble.prototype.getLink = function(rel) {
  * @return {Element} The bubble element.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.build_ = function() {
-	
-//  var bubble = document.createElement('div');
-//  var isIpad = this.isIpad_();
-//
-//  bubble.style.position = 'absolute';
-//  bubble.style.zIndex = 10;
-//  bubble.style.width = '100%';
-//  bubble.style.left = '0';
-//  bubble.style.top = '0';
-//
-//  var bubbleInner = document.createElement('div');
-//  bubbleInner.style.position = 'relative';
-//  bubbleInner.style.float = 'right';
-//  bubbleInner.style.right = '10px';
-//  bubbleInner.style.bottom = '-5px';
-//  bubbleInner.style.width = '160px';
-//  bubbleInner.style.border = '2px solid #FFFF26';
-//  bubbleInner.style.padding = '12px 5px 10px 5px';
-//  bubbleInner.style.WebkitBorderRadius = '8px';
-//  bubbleInner.style.WebkitBoxShadow = '0 0 8px #FFCC33';
-//  bubbleInner.style.backgroundImage = 'url(img/bookmark/bg.png)';
-//   bubbleInner.style.backgroundSize = '170px 120px';
-//  bubbleInner.style.font = '12px/12px sans-serif';
-//  bubbleInner.style.color = '#000000';
-//  bubble.appendChild(bubbleInner);
-//    bubbleInner.style.lineHeight = '18px';
-//  // The "Add to Home Screen" text is intended to be the exact same text
-//  // that is displayed in the menu of Mobile Safari.
-//if (this.getIosVersion_() >= this.getVersion_(4, 2)) {
-//    /*bubbleInner.innerHTML = 'Install this web app on your phone: ' +
-//        'tap on the arrow and then <b>\'Add to Home Screen\'</b>';*/
-//    bubbleInner.innerHTML = '<p><b>ニコニコへ<br>すぐアクセス！</b></p><p style="clear:both;margin-left:10px;">画面下部の<img src="img/bookmark/browsingicon.png" width="20" border="0">ボタンから<br><b>ホーム画面に追加</b>しよう！</p>';
-//  } else {
-//    /*bubbleInner.innerHTML = 'Install this web app on your phone: ' +
-//        'tap <b style="font-size:15px">+</b> and then ' +
-//        '<b>\'Add to Home Screen\'</b>';*/
-//    bubbleInner.innerHTML = '<p><b>ニコニコへ<br>すぐアクセス！</b></p><p style="clear:both;margin-left:10px;">画面下部の<b style="font-size:15px">+</b>ボタンから<br><b>ホーム画面に追加</b>しよう！</p>';
-//  }
-//
-//  var icon = document.createElement('div');
-//  icon.style['float'] = 'left';
-//  icon.style.width = '40px';
-//  icon.style.height = '40px';
-//  icon.style.margin = '-2px 6px 3px 10px';
-//  icon.style.background =
-//      '#5D83C5 url(img/apple-touch-icon-114x114.png?130108) no-repeat -1px -1px';
-//  icon.style.WebkitBackgroundSize = '42px';
-//  icon.style.WebkitBorderRadius = '10px';
-//  icon.style.WebkitBoxShadow = '0 2px 5px rgba(0, 0, 0, 0.4)';
-//  bubbleInner.insertBefore(icon, bubbleInner.firstChild);
-
-/*
-  var arrow = document.createElement('div');
-  arrow.style.backgroundImage = 'url(img/bookmark/arrow.png)';
-  arrow.style.width = '25px';
-  arrow.style.height = '19px';
-  arrow.style.position = 'absolute';
-  arrow.style.left = '160px';
-  if (isIpad) {
-    arrow.style.WebkitTransform = 'rotate(180deg)';
-    arrow.style.top = '-19px';
-  } else {
-    arrow.style.bottom = '-19px';
-  }
-  bubbleInner.appendChild(arrow);
-*/
-
-//  var close = document.createElement('a');
-//  close.onclick = google.bind(this.closeClickHandler_, this);
-//  close.style.position = 'absolute';
-//  close.style.display = 'block';
-//  close.style.top = '-3px';
-//  close.style.right = '-3px';
-//  close.style.width = '24px';
-//  close.style.height = '24px';
-//  close.style.border = '10px solid transparent';
-//  close.style.background =
-//      'url(img/bookmark/close.png) no-repeat';
-//  bubbleInner.appendChild(close);
-//  close.style.backgroundSize = '24px';
-//  bubbleInner.appendChild(close);
+google.bookmarkbubble.Bubble.prototype.build = function() {
   var bubble = document.getElementById("jsBookmarkBubble");
-  if (this.getIosVersion_() >= this.getVersion_(4, 2)) {
+  if (this.getIosVersion() >= this.getVersion(4, 2)) {
 	  document.getElementById("jsBookmarkBubble1").style.display = "block";
   } else {
 	  document.getElementById("jsBookmarkBubble2").style.display = "block";
   }
-  document.getElementById("jsBookmarkBubbleClose").onclick = google.bind(this.closeClickHandler_, this);
+  document.getElementById("jsBookmarkBubbleClose").onclick = google.bind(this.closeClickHandler, this);
   bubble.style.display = "block";
   return bubble;
 };
