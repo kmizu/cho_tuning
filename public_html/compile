@@ -1,0 +1,11 @@
+#!/bin/sh
+alias closure=/usr/local/closure/bin/closure
+closure --js js/adsSimple-1.0.0.min.js --js_output_file js/adsSimple-1.0.0.min.min.js
+closure --js js/bookmarkbubble.js --js_output_file js/bookmarkbubble.min.js
+closure --js js/bookmarkbubble_move.js --js_output_file js/bookmarkbubble_move.min.js
+closure --js js/categoryalliance.js --js_output_file js/categoryalliance.min.js
+closure --js js/common.js --js_output_file js/common.min.js
+closure --js js/jquery.showMenu.js --js_output_file js/jquery.showMenu.min.js
+closure --js js/middle_banner.js --js_output_file js/middle_banner.min.js
+closure --js js/nicoapi.js --js_output_file js/nicoapi.min.js
+closure --js js/urchin.js --js_output_file js/urchin.min.js
