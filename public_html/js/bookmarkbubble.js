@@ -398,8 +398,7 @@ google.bookmarkbubble.Bubble.prototype.isIpad = function() {
  * @return {number} A representation of the version.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.getVersion = function(opt_a, opt_b,
-    opt_c, opt_d) {
+google.bookmarkbubble.Bubble.prototype.getVersion = function(opt_a, opt_b, opt_c, opt_d) {
   // We want to allow implicit conversion of any type to number while avoiding
   // compiler warnings about the type.
   return /** @type {number} */ (opt_a) << 21 |
@@ -415,8 +414,7 @@ google.bookmarkbubble.Bubble.prototype.getVersion = function(opt_a, opt_b,
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.getIosVersion = function() {
-  var groups = this.IOS_VERSION_USERAGENT_REGEX.exec(
-      window.navigator.userAgent) || [];
+  var groups = this.IOS_VERSION_USERAGENT_REGEX.exec(window.navigator.userAgent) || [];
   groups.shift();
   return this.getVersion.apply(this, groups);
 };
@@ -428,8 +426,7 @@ google.bookmarkbubble.Bubble.prototype.getIosVersion = function() {
  */
 google.bookmarkbubble.Bubble.prototype.setPosition = function() {
   this.element.style.WebkitTransition = '-webkit-transform 0.7s ease-out';
-  this.element.style.WebkitTransform =
-      'translate3d(0,' + this.getVisibleYPosition() + 'px,0)';
+  this.element.style.WebkitTransform = 'translate3d(0,' + this.getVisibleYPosition() + 'px,0)';
 };
 
 
@@ -453,8 +450,7 @@ google.bookmarkbubble.Bubble.prototype.autoDestruct = function() {
     return;
   }
   this.element.style.WebkitTransition = '-webkit-transform 0.7s ease-in';
-  this.element.style.WebkitTransform =
-      'translate3d(0,' + this.getHiddenYPosition() + 'px,0)';
+  this.element.style.WebkitTransform = 'translate3d(0,' + this.getHiddenYPosition() + 'px,0)';
   window.setTimeout(google.bind(this.destroy, this), 700);
 };
 
@@ -465,7 +461,8 @@ google.bookmarkbubble.Bubble.prototype.autoDestruct = function() {
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.getVisibleYPosition = function() {
-  return this.isIpad() ? window.pageYOffset + 17 :
+  return this.isIpad() ?
+      window.pageYOffset + 17 :
       window.pageYOffset - this.element.offsetHeight + window.innerHeight - 17;
 };
 
@@ -476,7 +473,8 @@ google.bookmarkbubble.Bubble.prototype.getVisibleYPosition = function() {
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.getHiddenYPosition = function() {
-  return this.isIpad() ? window.pageYOffset - this.element.offsetHeight :
+  return this.isIpad() ?
+      window.pageYOffset - this.element.offsetHeight :
       window.pageYOffset + window.innerHeight;
 };
 
@@ -486,7 +484,7 @@ google.bookmarkbubble.Bubble.prototype.getHiddenYPosition = function() {
  * @type {string|undefined}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.iconUrl_;
+google.bookmarkbubble.Bubble.prototype.iconUrl;
 
 
 /**
@@ -496,13 +494,13 @@ google.bookmarkbubble.Bubble.prototype.iconUrl_;
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.getIconUrl = function() {
-  if (!this.iconUrl_) {
+  if (!this.iconUrl) {
     var link = this.getLink(this.REL_ICON);
-    if (!link || !(this.iconUrl_ = link.href)) {
-      this.iconUrl_ = 'data:image/png;base64,';
+    if (!link || !(this.iconUrl = link.href)) {
+      this.iconUrl = 'data:image/png;base64,';
     }
   }
-  return this.iconUrl_;
+  return this.iconUrl;
 };
 
 
