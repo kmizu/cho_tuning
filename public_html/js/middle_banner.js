@@ -1,6 +1,6 @@
 var Nico_MiddleBanner = (function() {
 	var MiddleBannerView = {
-		'getMiddleBannerZoneId': function() {
+		getMiddleBannerZoneId: function() {
 			return parseInt(jQuery('#jsMiddleBannerZoneId').val(), 10);
 		}
 	};
@@ -10,7 +10,7 @@ var Nico_MiddleBanner = (function() {
 			middle_banner_zone_id = 0,
 			preinit_request_queue = [];
 		return {
-			'initialize': function() {
+			initialize: function() {
 				var i = 0, l = preinit_request_queue.length;
 				middle_banner_zone_id = MiddleBannerView.getMiddleBannerZoneId();
 				is_initialized = true;
@@ -19,7 +19,7 @@ var Nico_MiddleBanner = (function() {
 				}
 				preinit_request_queue.length = 0;
 			},
-			'loadMiddleBanner': function(element_id) {
+			loadMiddleBanner: function(element_id) {
 				if (!is_initialized) {
 					// initialize実行前に呼ばれたらキューにためる
 					preinit_request_queue.push(element_id);
