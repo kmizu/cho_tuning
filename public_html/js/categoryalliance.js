@@ -6,30 +6,28 @@ window.Nico_CategoryAllianceController = (function () {
 	var AdsApiModel = (function () {
 		var path = 'api/OxBannerService/getAdvertisementsAndLogImpression.jsonp?callback=?';
 		
-		var fetchByZoneId = function (zone_id, callback) {
-			jQuery.getJSON(
-				ads_base_url + path,
-				{
-					'zone': zone_id
-				},
-				callback
-			);
-		};
-		
 		return {
-			'fetchByZoneId' : fetchByZoneId
-		};
+            fetchByZoneId: function (zone_id, callback) {
+                jQuery.getJSON(
+                        ads_base_url + path,
+                    {
+                        'zone': zone_id
+                    },
+                    callback
+                );
+            }
+        };
 	})();
 	
 	var AdsApiCallbackController = (function(){
 		return {
-			'fetchAdsListCallback' : function (response) {
+			fetchAdsListCallback: function (response) {
 				if (!response.data) {
 					return ;
 				}
 				AdsAreaView.setAdsData(response.data);
 			},
-			'fetchTopAdCallback' : function (response) {
+			fetchTopAdCallback: function (response) {
 				if (!response.data || response.data.length !== 1) {
 					return ;
 				}
