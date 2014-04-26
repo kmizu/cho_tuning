@@ -1,6 +1,6 @@
 #!/bin/sh
 alias closure=/usr/local/closure/bin/closure
-for input in js/adsSimple-1.0.0.min js/bookmarkbubble js/bookmarkbubble_move js/categoryalliance js/common js/jquery.showMenu js/middle_banner js/nicoapi js/urchin
+for input in js/adsSimple-1.0.0.min js/bookmarkbubble js/categoryalliance js/common js/jquery.showMenu js/middle_banner js/nicoapi js/urchin
 do
   closure --js public_html/${input}.js --js_output_file public_html/${input}.min.js
 done
